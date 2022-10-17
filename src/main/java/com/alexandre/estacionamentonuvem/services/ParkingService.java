@@ -13,13 +13,22 @@ public class ParkingService {
 
     static {
         var id = getUUID();
-        Parking parking = new Parking(id, "BNJ-9123", "SP", "Corsa", "Prata");
-        parkingMap.put(id, parking);
+        Parking parking1 = new Parking(getUUID(),"BNJ-9123", "SP", "Corsa", "Prata");
+        Parking parking2 = new Parking(getUUID(),"DDX-1842", "SP", "Vectra", "Prata");
+        Parking parking3 = new Parking(getUUID(), "EDY-3703", "SP", "Fiesta", "Prata");
+        parkingMap.put(parking1.getId(), parking1);
+        parkingMap.put(parking2.getId(), parking2);
+        parkingMap.put(parking3.getId(), parking3);
     }
 
     public List<Parking> findAll() {
         return parkingMap.values().stream().collect(Collectors.toList());
 //        return new ArrayList<>(parkingMap.values());
+    }
+
+    public Parking findById(String id) {
+
+        return parkingMap.get(id);
     }
 
 

@@ -4,11 +4,13 @@ import com.alexandre.estacionamentonuvem.controllers.dto.ParkingDTO;
 import com.alexandre.estacionamentonuvem.controllers.mapper.ParkingMapper;
 import com.alexandre.estacionamentonuvem.models.Parking;
 import com.alexandre.estacionamentonuvem.services.ParkingService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -25,13 +27,24 @@ public class ParkingController {
     }
 
     @GetMapping
-    public List<ParkingDTO> findAll() {
+    public ResponseEntity<List<ParkingDTO>> findAll() {
 
         List<Parking> parkingList = parkingService.findAll();
 
         List<ParkingDTO> parkingDTOList = parkingMapper.toParkingDTOList(parkingList);
 
-        return parkingDTOList;
+        return ResponseEntity.status(HttpStatus.OK).body(parkingDTOList);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
+        Parking parking = parkingService.findById(id);
+
+        ParkingDTO parkingDTO = parkingMapper.toParkingDTO(parking);
+
+        return ResponseEntity.status(HttpStatus.OK).body(parkingDTO);
+    }
+
+    //criando método...
 
 }
