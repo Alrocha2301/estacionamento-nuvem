@@ -1,4 +1,4 @@
-package com.alexandre.estacionamentonuvem.controller;
+package com.alexandre.estacionamentonuvem.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
