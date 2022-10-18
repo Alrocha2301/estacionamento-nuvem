@@ -1,5 +1,6 @@
 package com.alexandre.estacionamentonuvem.controllers.mapper;
 
+import com.alexandre.estacionamentonuvem.controllers.dto.ParkingCreateDto;
 import com.alexandre.estacionamentonuvem.controllers.dto.ParkingDTO;
 import com.alexandre.estacionamentonuvem.models.Parking;
 import org.modelmapper.ModelMapper;
@@ -19,5 +20,13 @@ public class ParkingMapper {
 
     public List<ParkingDTO> toParkingDTOList(List<Parking> parkingList) {
         return parkingList.stream().map(this::toParkingDTO).collect(Collectors.toList());
+    }
+
+    public Parking toParking(ParkingDTO dto) {
+        return MODEL_MAPPER.map(dto, Parking.class);
+    }
+
+    public Parking toParkingCreate(ParkingCreateDto dto) {
+        return MODEL_MAPPER.map(dto, Parking.class);
     }
 }

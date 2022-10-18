@@ -1,15 +1,13 @@
 package com.alexandre.estacionamentonuvem.controllers;
 
+import com.alexandre.estacionamentonuvem.controllers.dto.ParkingCreateDto;
 import com.alexandre.estacionamentonuvem.controllers.dto.ParkingDTO;
 import com.alexandre.estacionamentonuvem.controllers.mapper.ParkingMapper;
 import com.alexandre.estacionamentonuvem.models.Parking;
 import com.alexandre.estacionamentonuvem.services.ParkingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +43,13 @@ public class ParkingController {
         return ResponseEntity.status(HttpStatus.OK).body(parkingDTO);
     }
 
-    //criando método...
+    @PostMapping
+    public ResponseEntity<ParkingDTO> create(@RequestBody ParkingCreateDto dto) {
+        Parking parking = parkingService.create(parkingMapper.toParkingCreate(dto));
 
+        ParkingDTO result = parkingMapper.toParkingDTO(parking);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+    //configurando exceções
 }

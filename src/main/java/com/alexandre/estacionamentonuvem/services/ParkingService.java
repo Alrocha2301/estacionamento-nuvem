@@ -3,6 +3,7 @@ package com.alexandre.estacionamentonuvem.services;
 import com.alexandre.estacionamentonuvem.models.Parking;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,8 +23,7 @@ public class ParkingService {
     }
 
     public List<Parking> findAll() {
-        return parkingMap.values().stream().collect(Collectors.toList());
-//        return new ArrayList<>(parkingMap.values());
+        return new ArrayList<>(parkingMap.values());
     }
 
     public Parking findById(String id) {
@@ -31,9 +31,15 @@ public class ParkingService {
         return parkingMap.get(id);
     }
 
-
     private static String getUUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
+    public Parking create(Parking parkingCreate) {
+        parkingCreate.setId(getUUID());
+        parkingCreate.setEntryDate(LocalDateTime.now());
+        parkingMap.put(parkingCreate.getId(), parkingCreate);
+
+        return parkingCreate;
+    }
 }
