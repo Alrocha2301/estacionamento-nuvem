@@ -4,13 +4,18 @@ import com.alexandre.estacionamentonuvem.exceptions.ParkingNotFoundException;
 import com.alexandre.estacionamentonuvem.models.Parking;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.*;
 
 @Service
 public class ParkingService {
 
     private static Map<String, Parking> parkingMap = new HashMap<>();
+
+    int valorHora = 8;
 
     static {
         var id = getUUID();
@@ -61,5 +66,22 @@ public class ParkingService {
         updateParking.setColor(parking.getColor());
 
         return parkingMap.replace(id, updateParking);
+    }
+
+    public Parking exit(String id) {
+        Parking exitParking = findById(id);
+
+        if (exitParking.getExitDate() != null) {
+            return exitParking;
+        }
+
+        exitParking.setExitDate(LocalDateTime.now());
+
+        int period = Duration.between(exitParking.getEntryDate(), exitParking.getExitDate()).toHoursPart();
+        Double bill = (double) (period > 1 ? period * valorHora : 5);
+
+        exitParking.setBill( bill);
+
+        return exitParking;
     }
 }

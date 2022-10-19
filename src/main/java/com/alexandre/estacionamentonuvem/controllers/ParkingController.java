@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -64,6 +65,14 @@ public class ParkingController {
         parkingService.deleteById(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Parking excluído com sucesso");
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<ParkingDTO> exit(@PathVariable String id) {
+        Parking parking = parkingService.exit(id);
+
+        ParkingDTO result = parkingMapper.toParkingDTO(parking);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
 

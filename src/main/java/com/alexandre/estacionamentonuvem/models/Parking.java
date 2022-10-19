@@ -22,6 +22,7 @@ public class Parking {
         this.state = state;
         this.model = model;
         this.color = color;
+        this.entryDate = LocalDateTime.now();
     }
 
     public Parking(String license, String state, String model, String color) {
