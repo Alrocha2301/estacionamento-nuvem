@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ParkingService {
@@ -57,7 +56,10 @@ public class ParkingService {
         parkingMap.remove(id);
     }
 
-//    public Parking updateParking(String id, Parking parking) {
-//
-//    }
+    public Parking update(Parking parking, String id) {
+        Parking updateParking = findById(id);
+        updateParking.setColor(parking.getColor());
+
+        return parkingMap.replace(id, updateParking);
+    }
 }
