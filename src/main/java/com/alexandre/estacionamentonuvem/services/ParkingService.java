@@ -1,5 +1,6 @@
 package com.alexandre.estacionamentonuvem.services;
 
+import com.alexandre.estacionamentonuvem.exceptions.ParkingNotFoundException;
 import com.alexandre.estacionamentonuvem.models.Parking;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,12 @@ public class ParkingService {
     }
 
     public Parking findById(String id) {
+        Parking parking = parkingMap.get(id);
 
-        return parkingMap.get(id);
+        if (parking == null) {
+            throw new ParkingNotFoundException(id);
+        }
+        return parking;
     }
 
     private static String getUUID() {
@@ -42,4 +47,17 @@ public class ParkingService {
 
         return parkingCreate;
     }
+
+    public void deleteById(String id) {
+        Parking parking = parkingMap.get(id);
+
+        if (parking == null) {
+            throw new ParkingNotFoundException(id);
+        }
+        parkingMap.remove(id);
+    }
+
+//    public Parking updateParking(String id, Parking parking) {
+//
+//    }
 }

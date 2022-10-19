@@ -37,7 +37,6 @@ public class ParkingController {
     @GetMapping("/{id}")
     public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
         Parking parking = parkingService.findById(id);
-
         ParkingDTO parkingDTO = parkingMapper.toParkingDTO(parking);
 
         return ResponseEntity.status(HttpStatus.OK).body(parkingDTO);
@@ -51,5 +50,11 @@ public class ParkingController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    //configurando exceções
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable String id) {
+        parkingService.deleteById(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Parking excluído com sucesso");
+    }
+
 }
